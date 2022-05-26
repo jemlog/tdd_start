@@ -3,6 +3,10 @@ package study.testdriven.chap02;
 public class PasswordStrengthMeter {
     public PasswordStrength meter(String s)
     {
+        /*
+        최대한 메인 로직의 코드를 줄이는 방향으로 메서드를 분리해내자
+        또한 공통 요소들 최대한 묶어내기!
+         */
         if(s == null || s.isEmpty()) return PasswordStrength.INVALID;
         // 개별 규칙을 검사하는 로직들
         int metCounts = getMetCriteriaCounts(s);

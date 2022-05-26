@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 3. 만약 모두 충족해야 하는것과 모두 틀려야 하는게 있다면 구현이 쉬운건 모두 충족하는거!
  */
 public class PasswordStrengthMeterTest {
+
     PasswordStrengthMeter meter = new PasswordStrengthMeter();
 
     private void assertStrength(String password, PasswordStrength expStr)
