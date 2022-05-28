@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Spy;
 
 public class UserRegisterTest {
 
@@ -13,11 +14,12 @@ public class UserRegisterTest {
     private UserRegister userRegister;
     private StubWeakPasswordChecker stubPasswordChecker = new StubWeakPasswordChecker();
     private MemoryUserRepository fakeRepository = new MemoryUserRepository();
+    private SpyEmailNotifier spyEmailNotifier = new SpyEmailNotifier();
 
     @BeforeEach
     void setUp()
     {
-        userRegister = new UserRegister(stubPasswordChecker,fakeRepository);
+        userRegister = new UserRegister(stubPasswordChecker,fakeRepository,spyEmailNotifier);
     }
 
     @DisplayName("약한 암호면 가입 실패")
@@ -40,5 +42,15 @@ public class UserRegisterTest {
             userRegister.register("id","pw2","email");
         });
     }
+
+    @DisplayName("가입하면 이메일 전송함")
+    @Test
+    void sendEmail()
+    {
+        userRegister.register("id","pw","email@email.com");
+        Assertions.assertTrue(spyEmailNotifier.isCalled());
+        Assertions.assertEquals("email@email.com",spyEmailNotifier.getEmail());
+    }
+
 
 }
